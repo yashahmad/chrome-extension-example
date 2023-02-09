@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm-watch",
+    "build": "next build && next export && npm run lint:build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:build": "mv out/_next out/assets && sed -i 's/\\\\/_next/\\\\/assets/g' out/**.html"
   },
   "dependencies": {
     "next": "13.1.6",
@@ -16,5 +17,26 @@
   "devDependencies": {
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "styles/**",
+        "pages/**",
+        "public/**",
+        "helpers/**",
+        "next.config.js"
+      ],
+      "ignore": [
+        "out",
+        "node_modules",
+        ".next",
+        ".vscode"
+      ],
+      "extensions": [
+        "js",
+        "json"
+      ]
+    }
   }
 }
